@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "e63d097e-bc47-47fa-be67-9ee23687155d",
+		"name": "f1-m-geolocation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "geo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/plain",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"entity\":\"pm_sucursales\",\n    \"options\":\"negocio.id>0\",\n    \"quadrant\":\"19.439095 -99.141139 19.422588 -99.119304\"\n}"
+				},
+				"url": {
+					"raw": "{{dominio}}/geo",
+					"host": [
+						"{{dominio}}"
+					],
+					"path": [
+						"geo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "promociones cuadrante",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "FrameworkDevelopPost",
+						"value": "true"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"site\":\"5\",\r\n\t\"entity\":\"pm_sucursales\",\r\n\t\"options\":\"negocio.id>0,promocion.statusPromocion=1\",\r\n\t\"quadrant\":\"19.423858911173422 -99.15377855300903 19.413496915335884 -99.09588575363159\"\r\n}"
+				},
+				"url": {
+					"raw": "https://kio.banamex.com/frameworkUAT/geo",
+					"protocol": "https",
+					"host": [
+						"kio",
+						"banamex",
+						"com"
+					],
+					"path": [
+						"frameworkUAT",
+						"geo"
+					]
+				},
+				"description": "localizador promociones cuadrante"
+			},
+			"response": []
+		},
+		{
+			"name": "Localizador cuadrante",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2aa3365f-f3c7-47b1-b456-06d56a7483ef",
+						"exec": [
+							"pm.test(\"Lo_Localizador-ResponseCode\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Lo_Localizador-Json\", function () {\r",
+							"   pm.response.to.be.json;\r",
+							"});\r",
+							"pm.test(\"Lo_Localizador-Max-Response-Time\", function () {\r",
+							"   pm.expect(pm.response.responseTime).to.be.below(15000);\r",
+							"});\r",
+							"pm.test(\"Lo_Localizador-Response-Time\", function () {\r",
+							"   pm.expect(pm.response.responseTime).to.be.below(5000);\r",
+							"    pm.expect(pm.response.responseTime).to.be.above(1);\r",
+							"});\r",
+							"pm.test(\"Lo_Localizador-Body\", function () {\r",
+							"   pm.response.to.be.withBody;\r",
+							"});\r",
+							"pm.test(\"Lo_Localizador-Data\", function () {\r",
+							"   pm.expect(pm.response.text()).to.include(\"data\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "FrameworkDevelopPost",
+						"type": "text",
+						"value": "true"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"site\":\"5\",\n\t\"entity\":\"bnmx_sucursales_summary\",\n\t\"options\":\"tipo.numero=100,tipo.numero=110\",\n\t\"quadrant\":\"19.3967311869599 -99.30096475004274 19.358470366478343 -99.21929684995729\",\n\t\"logicalOperator\":\"OR\",\n\t\"single\":\"true\"\n}"
+				},
+				"url": {
+					"raw": "{{dominio}}/geo?",
+					"host": [
+						"{{dominio}}"
+					],
+					"path": [
+						"geo"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "promociones cuadrante",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "FrameworkDevelopPost",
+						"value": "true"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"site\":\"5\",\r\n\t\"entity\":\"pm_sucursales\",\r\n\t\"options\":\"negocio.id>0,promocion.statusPromocion=1\",\r\n\t\"quadrant\":\"19.423858911173422 -99.15377855300903 19.413496915335884 -99.09588575363159\"\r\n}"
+				},
+				"url": {
+					"raw": "{{dominio}}/geo",
+					"host": [
+						"{{dominio}}"
+					],
+					"path": [
+						"geo"
+					]
+				},
+				"description": "localizador promociones cuadrante"
+			},
+			"response": []
+		},
+		{
+			"name": "Localizador Radius",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3468c66b-df44-4091-a4bf-5c2a2099c6c4",
+						"exec": [
+							"pm.test(\"Localizador-Radius-Movil-ResponseCode\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Localizador-Radius-Movil-Json\", function() {",
+							"    pm.response.to.be.json;",
+							"});",
+							"pm.test(\"Localizador-Radius-Movil-Max-Response-Time\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(15000);",
+							"});",
+							"pm.test(\"Localizador-Radius-Movil-Response-Time\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"    pm.expect(pm.response.responseTime).to.be.above(1);",
+							"});",
+							"pm.test(\"Localizador-Radius-Movil-Body\", function() {",
+							"    pm.response.to.be.withBody;",
+							"});",
+							"pm.test(\"Localizador-Radius-Movil-Data\", function () {",
+							"   pm.expect(pm.response.text()).to.include(\"data\");",
+							"});",
+							"pm.test(\"Localizador-Radius-Movil-Data\", function() {",
+							"    pm.expect(pm.response.json().size).to.be.above(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "FrameworkDevelopPost",
+						"value": "true"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"site\":\"5\",\r\n   \"entity\":\"bnmx_sucursales\",\r\n   \"options\":\"servicios.numero=100\",\r\n   \"logicalOperator\":\"OR\",\r\n   \"radius\":\"19.361893 -99.273113 2\"\r\n}"
+				},
+				"url": {
+					"raw": "{{dominio}}/geo",
+					"host": [
+						"{{dominio}}"
+					],
+					"path": [
+						"geo"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
